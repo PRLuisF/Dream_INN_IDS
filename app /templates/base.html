@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Holiday Crown | Best hotel in Dubai</title>
+  <title>DreamINN | Best hotel </title>
 
   <!-- Google fonts -->
   <link href='http://fonts.googleapis.com/css?family=Raleway:300,500,800|Old+Standard+TT' rel='stylesheet' type='text/css'>
@@ -36,15 +36,6 @@
 </head>
 
 <body id="home">
-  <!-- top 
-    <form class="navbar-form navbar-left newsletter" role="search">
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Enter Your Email Id Here">
-          </div>
-          <button type="submit" class="btn btn-inverse">Subscribe</button>
-      </form>
-  top -->
-
   <!-- header -->
   <nav class="navbar  navbar-default" role="navigation">
     <div class="container">
@@ -56,18 +47,18 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="{{ url_for('index')}}"><img src="{{ url_for('static', filename='images/logo.png')}}"  alt="holiday crown"></a>
+        <a class="navbar-brand" href="{{ url_for('home')}}"><img src="{{ url_for('static', filename='images/logo.png')}}"  alt="holiday crown"></a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
         
         <ul class="nav navbar-nav">        
-          <li><a href="{{ url_for('index')}}">Home </a></li>
-          <li><a href="{{ url_for('tipos_habitaciones')}}">Rooms & Tariff</a></li>        
-          <li><a href="{{ url_for('intro')}}">Introduction</a></li>
+          <li><a href="{{ url_for('home')}}">Home</a></li>
+          <li><a href="{{ url_for('tipos_habitaciones')}}">Tipos de habitaciones</a></li>        
+          <li><a href="{{ url_for('about')}}">About</a></li>
           <li><a href="{{ url_for('gallery')}}">Gallery</a></li>
-          <li><a href="{{ url_for('contact')}}">Contact</a></li>
+          <li><a href="{{ url_for('cancerlar_reserva')}}">Cancelar Reserva</a></li>
         </ul>
       </div><!-- Wnavbar-collapse -->
     </div><!-- container-fluid -->
@@ -86,21 +77,15 @@
               <div class="col-sm-3">
                   <h4>Quick Links</h4>
                   <ul class="list-unstyled">
-                      <li><a href="rooms-tariff.php">Rooms & Tariff</a></li>        
-                      <li><a href="introduction.php">Introduction</a></li>
-                      <li><a href="gallery.php">Gallery</a></li>
-                      <li><a href="tour.php">Tour Packages</a></li>
-                      <li><a href="contact.php">Contact</a></li>
+                      <li><a href="{{ url_for('tipos_habitaciones')}}">Tipos de habitaciones</a></li>       
+                      <li><a href="{{ url_for('about')}}">About</a></li>
+                      <li><a href="{{ url_for('gallery')}}">Gallery</a></li>
+                      <!-- <li><a href="tour.php">Tour Packages</a></li> (por definir) -->
+                      <li><a href="{{ url_for('cancerlar_reserva')}}">Cancelar Reserva</a></li>
                   </ul>
               </div>
               <div class="col-sm-4 subscribe">
-                  <h4>Subscription</h4>
-                  <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Enter email id here">
-                  <span class="input-group-btn">
-                  <button class="btn btn-default" type="button">Get Notify</button>
-                  </span>
-                  </div>
+                  <h4>Redes Sociales</h4>
                   <div class="social">
                   <a href="#"><i class="fa fa-facebook-square" data-toggle="tooltip" data-placement="top" data-original-title="facebook"></i></a>
                   <a href="#"><i class="fa fa-instagram"  data-toggle="tooltip" data-placement="top" data-original-title="instragram"></i></a>
@@ -118,8 +103,8 @@
   <!--/.footer-bottom--> 
   </footer>
 
-  <div class="text-center copyright">Powered by <a href="http://thebootstrapthemes.com">thebootstrapthemes.com</a></div>
+  <div class="text-center copyright">© 2024 Todos los derechos reservados</div>
 
-  <a href="#home" class="toTop scroll"><i class="fa fa-angle-up"></i></a>
+  <a href="{{ url_for('home')}}" class="toTop scroll"><i class="fa fa-angle-up"></i></a>
 </body>
 </html>
