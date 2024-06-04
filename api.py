@@ -31,5 +31,26 @@ def mostrar_habitaciones() -> dict:
     
     return jsonify(datos), 200
 
+@app.route("/Tipo_Habitaciones", methods = ['GET'])
+def mostrar_tipos():
+
+    conn = engine.connect()
+    query = "SELECT * FROM Tipo_Habitaciones;"
+    try:
+        tipos = conn.execute(text(query))
+        conn.close() 
+    except SQLAlchemyError as err:
+        return jsonify(str(err.__cause__))
+    
+    datos = []
+    for dato in tipos:
+        informacion = {}
+        informacion['tipo_habitacion'] = dato.tipo_habitacion
+        informacion['descripcion'] = dato.descripcion
+        informacion['precio'] = dato.precio
+        datos.append(informacion)
+
+    return jsonify(datos), 200
+
 if __name__ == "__main__":
     app.run("127.0.0.1", port = 5000, debug = True)
