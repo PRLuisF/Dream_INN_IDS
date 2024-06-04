@@ -172,3 +172,26 @@ body::-webkit-scrollbar {
 
     .room-features .size-price{margin-bottom: 2em;}
 }
+
+.error{
+    margin-top: 12%; 
+    margin-bottom: 12%;
+    text-align: center;
+}
+
+.error-h1{
+    color: rgb(201, 169, 64);
+}
+.error-h2{
+    color: rgb(138, 116, 46);
+    line-height: 1;
+}
+.error-a{
+    color: rgb(138, 116, 46);
+    line-height: 1;
+}
+
+.error-a:hover{
+    color: rgb(73, 62, 24);
+    font-weight: 600;
+}
