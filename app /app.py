@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -18,8 +18,15 @@ def about():
 def gallery():
     return render_template('gallery.html')
 
-@app.route('/cancelar-reserva')
-def cancerlar_reserva():
+@app.route('/cancelar-reserva', methods = ["GET", "POST"])
+def cancelar_reserva():
+    if request.method == "POST":
+        nreserva = request.form.get('id_reserva')
+        reservas = {1,2,3,4,5,6,7} #cuando se integra con la api se cambia por la request correspondiente
+        if int(nreserva) in reservas: #cuando se integra con la api se cambia al estado de la request 
+            return render_template('mensaje_de_confirmacion.html', mensaje="La reserva se ha cancelado exitosamente", id_reserva=nreserva)
+        else:
+            return render_template('mensaje_de_confirmacion.html', mensaje="No se encontró ninguna reserva con el número ingresado", id_reserva=nreserva)
     return render_template('cancelacion.html')
 
 @app.route('/detalles')

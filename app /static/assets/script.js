@@ -45,3 +45,10 @@ $('.carousel').swipe( {
      },
      allowPageScroll: 'vertical'
  });
+
+ 
+//Mensaje de Confirmacion para cancelar una reserva 
+function eliminarElemento() { 
+  if (confirm("¿Estás seguro de que deseas eliminar este elemento?")) { 
+    document.getElementById("deleteForm").submit(); 
+    } } 
