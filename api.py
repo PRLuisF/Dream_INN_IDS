@@ -52,5 +52,27 @@ def mostrar_tipos():
 
     return jsonify(datos), 200
 
+@app.route("/cancelar-reserva/<id>", methods=['DELETE','PATCH'])
+def cancelar_reserva(id):
+    conn = engine.connect()
+    validation_query = f"SELECT * FROM Reserva_Especifica WHERE id = {id};"
+    try:
+        val_result = conn.execute(text(validation_query))
+        if val_result.rowcount != 0:
+            row = val_result.fetchone()
+            n_habitacion = row.numero_habitacion
+            query1 = f"DELETE FROM Reserva_Especifica WHERE id = {id};"
+            query2 = f"UPDATE Habitaciones_Particulares SET estado = false WHERE numero_habitacion = '{n_habitacion}';"
+            resultado1 = conn.execute(text(query1))
+            resultado2 = conn.execute(text(query2))
+            conn.commit()
+            conn.close()
+            return jsonify({"message": "La reserva se ha cancelado correctamente"}), 202
+        else:
+            conn.close()
+            return jsonify({"message": "No existe la reserva de tal ID"}), 404
+    except SQLAlchemyError as err:
+        return jsonify(str(err.__cause__))
+
 if __name__ == "__main__":
     app.run("127.0.0.1", port = 5000, debug = True)
