@@ -35,4 +35,4 @@ def internal_server_error(e):
     return render_template('500.html'), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run("127.0.0.1", port = 8080, debug = True)
