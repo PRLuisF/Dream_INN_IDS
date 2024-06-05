@@ -48,7 +48,7 @@ $('.carousel').swipe( {
 
  
 //Mensaje de Confirmacion para cancelar una reserva 
-function eliminarElemento() { 
-  if (confirm("¿Estás seguro de que deseas eliminar este elemento?")) { 
+function eliminarReserva() { 
+  if (confirm("¿Estás seguro de que deseas eliminar esta reserva?")) { 
     document.getElementById("deleteForm").submit(); 
     } } 

@@ -26,7 +26,7 @@ def cancelar_reserva():
         if int(nreserva) in reservas: #cuando se integra con la api se cambia al estado de la request 
             return render_template('mensaje_de_confirmacion.html', mensaje="La reserva se ha cancelado exitosamente", id_reserva=nreserva)
         else:
-            return render_template('mensaje_de_confirmacion.html', mensaje="No se encontró ninguna reserva con el número ingresado", id_reserva=nreserva)
+            return render_template('cancelacion.html', mensaje="No se encontró ninguna reserva con el número ingresado")
     return render_template('cancelacion.html')
 
 @app.route('/detalles')
