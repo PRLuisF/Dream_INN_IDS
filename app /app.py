@@ -7,16 +7,16 @@ def home():
     return render_template('home.html')
 
 @app.route('/habitaciones')
-def tipos_habitaciones():
+def habitaciones():
     return render_template('habitaciones.html')
 
 @app.route('/about') 
 def about():
     return render_template('about.html')
 
-@app.route('/gallery')
-def gallery():
-    return render_template('gallery.html')
+@app.route('/reserva')
+def reserva():
+    return render_template('reserva.html')
 
 @app.route('/cancelar-reserva', methods = ["GET", "POST"])
 def cancelar_reserva():
