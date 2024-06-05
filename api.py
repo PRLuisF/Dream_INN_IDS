@@ -99,19 +99,15 @@ def mostrar_tipos():
 
 
 
-@app.route("/cancelar-reserva/<id>", methods=['DELETE','PATCH'])
+@app.route("/cancelar-reserva/<id>", methods=['DELETE'])
 def cancelar_reserva(id):
     conn = engine.connect()
-    validation_query = f"SELECT * FROM Reserva_Especifica WHERE id = {id};"
+    validation_query = f"SELECT * FROM reservas WHERE id = {id};"
     try:
         val_result = conn.execute(text(validation_query))
         if val_result.rowcount != 0:
-            row = val_result.fetchone()
-            n_habitacion = row.numero_habitacion
-            query1 = f"DELETE FROM Reserva_Especifica WHERE id = {id};"
-            query2 = f"UPDATE Habitaciones_Particulares SET estado = false WHERE numero_habitacion = '{n_habitacion}';"
+            query1 = f"DELETE FROM reservas WHERE id = {id};"
             resultado1 = conn.execute(text(query1))
-            resultado2 = conn.execute(text(query2))
             conn.commit()
             conn.close()
             return jsonify({"message": "La reserva se ha cancelado correctamente"}), 202
