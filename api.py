@@ -76,30 +76,6 @@ def mostrar_habitaciones():
     return jsonify(datos), 200
 
 
-
-@app.route("/Tipo_Habitaciones", methods = ['GET'])
-def mostrar_tipos():
-
-    conn = engine.connect()
-    query = "SELECT * FROM Tipo_Habitaciones;"
-    try:
-        tipos = conn.execute(text(query))
-        conn.close() 
-    except SQLAlchemyError as err:
-        return jsonify(str(err.__cause__))
-    
-    datos = []
-    for dato in tipos:
-        informacion = {}
-        informacion['tipo_habitacion'] = dato.tipo_habitacion
-        informacion['descripcion'] = dato.descripcion
-        informacion['precio'] = dato.precio
-        datos.append(informacion)
-
-    return jsonify(datos), 200
-
-
-
 @app.route("/cancelar-reserva/<id>", methods=['DELETE'])
 def cancelar_reserva(id):
     conn = engine.connect()
@@ -117,6 +93,28 @@ def cancelar_reserva(id):
             return jsonify({"message": "No existe la reserva de tal ID"}), 404
     except SQLAlchemyError as err:
         return jsonify(str(err.__cause__))
+    
+
+@app.route('/modificar/<habitacion>', methods = ['PATCH'])
+def update_habitacion(habitacion):
+    conn = engine.connect()
+    mod_data = request.get_json()
+
+    query = f"UPDATE habitaciones SET cantidad_personas = {mod_data['cantidad_personas']}, precio = {mod_data['precio']}, descripcion = '{mod_data['descripcion']}', categoria = '{mod_data['categoria']}' WHERE habitacion = {habitacion}"
+ 
+    query_validation = f"SELECT * FROM habitaciones WHERE habitacion = {habitacion};"
+    try:
+        val_result = conn.execute(text(query_validation))
+        if val_result.rowcount!=0:
+            result = conn.execute(text(query))
+            conn.commit()
+            conn.close()
+        else:
+            conn.close()
+            return jsonify({'message': "La habitacion no existe"}), 404
+    except SQLAlchemyError as err:
+        return jsonify({'message': str(err.__cause__)})
+    return jsonify({'message': 'La habitacion se ha modificado correctamente'}), 200
 
 
 
