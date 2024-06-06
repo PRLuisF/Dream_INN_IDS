@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content%}
+
+<!-- reservation-information -->
+<div id="information" class="spacer reserve-info ">
+    <div class="container">
+    <div class="row">
+    <div class="col-sm-7 col-md-8">
+        <div class="embed-responsive embed-responsive-16by9 wowload fadeInLeft"><iframe  class="embed-responsive-item" src="//player.vimeo.com/video/55057393?title=0" width="100%" height="400" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>
+    </div>
+    <div class="col-sm-5 col-md-4">
+    <h3>Realizar una Reserva</h3>
+        <form class="wowload fadeInRight" action="{{url_for('hacer_reserva')}}" method="POST">
+            <div class="form-group">
+                <input type="text" class="form-control" id="id_nombre" placeholder="Nombre">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" id="id_apellido" placeholder="Apellido">
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" id="id_email" placeholder="Email">
+            </div>   
+            <div class="form-group">
+              <select class="form-control" id="id_habitacion">
+                <option>Habitación</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+              </select>       
+            </div>
+            <div class="form-group">
+              <select class="form-control" id="id_personas">
+                <option>Cantidad de Personas</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+              </select>       
+            </div>      
+            <div class="form-group">
+                <div class="row">
+                <div class="col-xs-6">
+                  <input type="date" min="2024-07-01" max="2025-06-30" class="form-control" id="id_fecha">
+                </div>        
+                <div class="col-xs-6">
+                <select class="form-control" id="id_noches">
+                  <option>Cant. Noches</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+                </div></div>
+            </div>
+            <button type="submit" class="btn btn-default">Reservar</button>
+        </form>    
+    </div>
+    </div>  
+    </div>
+    </div>
+    <!-- reservation-information -->
+
+
+{% endblock %}
