@@ -117,6 +117,26 @@ def update_habitacion(habitacion):
     return jsonify({'message': 'La habitacion se ha modificado correctamente'}), 200
 
 
+@app.route('/eliminar/<habitacion>', methods = ['DELETE'])
+def eliminar_habitacion(habitacion):
+    conn = engine.connect()
+
+    query = f"DELETE from habitaciones WHERE habitacion = {habitacion}"
+    
+    validation_query = f"SELECT * FROM habitaciones WHERE habitacion = {habitacion}"
+    try:
+        val_result = conn.execute(text(validation_query))
+        if val_result.rowcount != 0 :
+            result = conn.execute(text(query))
+            conn.commit()
+            conn.close()
+        else:
+            conn.close()
+            return jsonify({"message": "La habitacion no existe"}), 404
+    except SQLAlchemyError as err:
+        jsonify(str(err.__cause__))
+    return jsonify({'message': 'La habitacion se elimino correctamente'}), 202
+
 
 if __name__ == "__main__":
     app.run("127.0.0.1", port = 5000, debug = True)
