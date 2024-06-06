@@ -93,6 +93,21 @@ def cancelar_reserva(id):
             return jsonify({"message": "No existe la reserva de tal ID"}), 404
     except SQLAlchemyError as err:
         return jsonify(str(err.__cause__))
+
+
+@app.route('/agregar-habitacion', methods=['POST'])
+def incorporar_habitacion():
+    conn = engine.connect()
+    nueva_hab = request.get_json()
+    query = f"""INSERT INTO habitaciones VALUES
+                ({nueva_hab["habitacion"]}, {nueva_hab["cantidad_personas"]}, {nueva_hab["precio"]}, '{nueva_hab["descripcion"]}', '{nueva_hab["categoria"]}');"""
+    try:
+        resultado = conn.execute(text(query))
+        conn.commit()
+        conn.close()
+        return jsonify({"message": "Se ha incorporado correctamente la nueva habitacion a la base de datos"}), 201
+    except SQLAlchemyError as err:
+        return jsonify({"message": "Se ha producido un error " + str(err.__cause__)})
     
 
 @app.route('/modificar/<habitacion>', methods = ['PATCH'])
