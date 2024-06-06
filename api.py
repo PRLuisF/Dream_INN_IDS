@@ -50,13 +50,13 @@ def generar_reserva():
 
 
 
-@app.route("/Habitaciones_Particulares", methods=["GET"])
-def mostrar_habitaciones() -> dict:
+@app.route("/habitaciones", methods=["GET"])
+def mostrar_habitaciones():
     """
     Se conecta a la base de datos dreaminn, y hace una consulta en la cual devuelve las habitaciones que no estan ocupadas
     """
     conn = engine.connect()
-    query = "SELECT * FROM Habitaciones_Particulares WHERE estado = 0;"
+    query = "SELECT * FROM habitaciones;"
     try:
         habs = conn.execute(text(query))
         conn.close()
@@ -65,11 +65,12 @@ def mostrar_habitaciones() -> dict:
 
     datos = []
     for dato in habs:
-        print(dato)
         hab = {}
-        hab['id'] = dato[0]
-        hab['tipo'] = dato[1]
-        hab['estado'] = dato[2]
+        hab['habitacion'] = dato.habitacion
+        hab['cantidad_personas'] = dato.cantidad_personas
+        hab['precio'] = dato.precio
+        hab['descripcion'] = dato.descripcion
+        hab['categoria'] = dato.categoria
         datos.append(hab)
     
     return jsonify(datos), 200
