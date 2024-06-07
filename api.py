@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import SQLAlchemyError
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 engine = create_engine("mysql+mysqlconnector://root@localhost:3305/dreaminn_db")
@@ -9,44 +10,73 @@ engine = create_engine("mysql+mysqlconnector://root@localhost:3305/dreaminn_db")
     
 
 
-@app.route("/generar_reserva", methods = ["POST"])
+@app.route("/generar-reserva", methods = ["POST"])
 def generar_reserva():
     """Genera un nuevo registro en la tabla Reserva_Especifica con los datos en formato JSON pasados por el body de la
-    request (nombre, email, tipo_habitacion, numero_habitacion, fecha_entrada, fecha_salida). Cambia el estado de la habitación
-    a true en la tabla Habitaciones_Particulares, y devuelve un JSON con claves: mensaje, id_reserva.
+    request (nombre, apellido, email, fecha_ingreso, cantidad_noches, cantidad_personas, habitacion)
     Nota: para que la tabla tome correctamente la fecha, se debe ingresar en formato YYYY-MM-DD."""
 
-    reserva = request.get_json()
-    with engine.connect() as conexion:
-
-        validacion = text(f"SELECT * FROM Reserva_Especifica WHERE numero_habitacion = {reserva['numero_habitacion']};")
+    datos_body = request.get_json()
+    with engine.connect() as conn:
+        validacion1 = text(f"SELECT cantidad_personas FROM habitaciones WHERE habitacion = {datos_body['habitacion']};")
+        validacion2 = text(f"SELECT fecha_ingreso, cantidad_noches, habitacion FROM reservas;")
+        query = text(f"INSERT INTO reservas (nombre, apellido, email, fecha_ingreso, cantidad_noches, cantidad_personas, habitacion) VALUES ('{datos_body['nombre']}', '{datos_body['apellido']}', '{datos_body['email']}', '{datos_body['fecha_ingreso']}', '{datos_body['cantidad_noches']}', '{datos_body['cantidad_personas']}', '{datos_body['habitacion']}');")
 
         try:
-            val_resultado = conexion.execute(validacion)
+            res_validacion1 = conn.execute(validacion1)
+            res_validacion2 = conn.execute(validacion2)
 
-            if val_resultado.rowcount != 0:            # si ya hay una reserva a ese número de habitación, no se puede reservar
-                return jsonify({"mensaje": f"La habitacion {reserva['numero_habitacion']} ya esta ocupada"}), 400
+            # verificar que cantidad de personas sea correcta
+            if res_validacion1.first().cantidad_personas < datos_body["cantidad_personas"]:
+                return jsonify({"mensaje": "Error: la cantidad de personas supera la capacidad de la habitacion"}), 400
             
-            # agregar reserva
-            query = text(f"INSERT INTO Reserva_Especifica (nombre, email, tipo_habitacion, numero_habitacion, fecha_entrada, fecha_salida) VALUES ('{reserva['nombre']}', '{reserva['email']}', '{reserva['tipo_habitacion']}', {reserva['numero_habitacion']}, '{reserva['fecha_entrada']}', '{reserva['fecha_salida']}');")
-            conexion.execute(query)
-            conexion.commit()
+            # verificar que fechas no se solapen
+            elif res_validacion2.rowcount != 0:
+                fecha_ingreso = datetime.strptime(datos_body["fecha_ingreso"], "%Y-%m-%d")
+                cant_noches = timedelta(days = datos_body["cantidad_noches"])
 
-            # obtener id de reserva
-            query_id = text(f"SELECT id FROM Reserva_Especifica WHERE numero_habitacion = {reserva['numero_habitacion']};")
-            res_id = conexion.execute(query_id)
-            id = res_id.fetchone().id
+                for fil in res_validacion2:
+                    fecha_reserva = datetime(fil.fecha_ingreso.year, fil.fecha_ingreso.month, fil.fecha_ingreso.day)
+                    noches_reserva = timedelta(days = fil.cantidad_noches)
 
-            # cambiar estado de habitación a true (ocupado)
-            query_estado_habitacion = text(f"UPDATE Habitaciones_Particulares SET estado = true WHERE numero_habitacion = {reserva['numero_habitacion']};")
-            conexion.execute(query_estado_habitacion)
-            conexion.commit()
+                    if fecha_reserva <= fecha_ingreso < fecha_reserva + noches_reserva and fil.habitacion == datos_body["habitacion"]:
+                        return jsonify({"mensaje": "Error: la habitacion esta ocupada en esas fechas."}), 400
+                    elif fecha_reserva < fecha_ingreso + cant_noches <= fecha_reserva + noches_reserva and fil.habitacion == datos_body["habitacion"]:
+                        return jsonify({"mensaje": "Error: la habitacion esta ocupada en esas fechas."}), 400
 
-            # devolver mensaje de éxito e id
-            return jsonify({"mensaje": "La reserva se ha realizado con exito", "id_reserva": id}), 201
+            # guardar reserva    
+            conn.execute(query)
+            conn.commit()
+
+            # obtener id de reserva para devolverlo en el json
+            query_id = text(f"SELECT id FROM reservas WHERE habitacion = {datos_body['habitacion']} AND fecha_ingreso = '{datos_body['fecha_ingreso']}' AND cantidad_noches = {datos_body['cantidad_noches']};")
+            id = conn.execute(query_id)
+            id = id.first().id
 
         except SQLAlchemyError as error:
-            return jsonify({"mensaje": f"Se ha producido un error: {error}"}), 500
+            return jsonify({"mensaje": f"Error {error.__cause__}"}), 500
+        
+        return jsonify({"mensaje": "La reserva se ha creado correctamente", "id_reserva": id}), 201
+
+        
+@app.route("/cancelar-reserva/<id>", methods=['DELETE'])
+def cancelar_reserva(id):
+    conn = engine.connect()
+    validation_query = f"SELECT * FROM reservas WHERE id = {id};"
+    try:
+        val_result = conn.execute(text(validation_query))
+        if val_result.rowcount != 0:
+            query1 = f"DELETE FROM reservas WHERE id = {id};"
+            resultado1 = conn.execute(text(query1))
+            conn.commit()
+            conn.close()
+            return jsonify({"message": "La reserva se ha cancelado correctamente"}), 202
+        else:
+            conn.close()
+            return jsonify({"message": "No existe la reserva de tal ID"}), 404
+    except SQLAlchemyError as err:
+        return jsonify(str(err.__cause__))
+
 
 
 @app.route("/habitaciones", methods=["GET"])
@@ -73,25 +103,6 @@ def mostrar_habitaciones():
         datos.append(hab)
     
     return jsonify(datos), 200
-
-
-@app.route("/cancelar-reserva/<id>", methods=['DELETE'])
-def cancelar_reserva(id):
-    conn = engine.connect()
-    validation_query = f"SELECT * FROM reservas WHERE id = {id};"
-    try:
-        val_result = conn.execute(text(validation_query))
-        if val_result.rowcount != 0:
-            query1 = f"DELETE FROM reservas WHERE id = {id};"
-            resultado1 = conn.execute(text(query1))
-            conn.commit()
-            conn.close()
-            return jsonify({"message": "La reserva se ha cancelado correctamente"}), 202
-        else:
-            conn.close()
-            return jsonify({"message": "No existe la reserva de tal ID"}), 404
-    except SQLAlchemyError as err:
-        return jsonify(str(err.__cause__))
 
 
 @app.route('/agregar-habitacion', methods=['POST'])
