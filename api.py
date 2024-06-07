@@ -49,7 +49,6 @@ def generar_reserva():
             return jsonify({"mensaje": f"Se ha producido un error: {error}"}), 500
 
 
-
 @app.route("/habitaciones", methods=["GET"])
 def mostrar_habitaciones():
     """
