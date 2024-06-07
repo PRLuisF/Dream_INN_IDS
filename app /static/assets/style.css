@@ -172,7 +172,49 @@ body::-webkit-scrollbar {
 
     .room-features .size-price{margin-bottom: 2em;}
 }
+/*Formulario de Cancelacion de Reservas*/
+.container2{
+    margin-top: 12%; 
+    margin-bottom: 12%;
+    text-align: center;
+}
 
+#title-cancelacion{
+    color: #bfa145;
+    font-size:400%;
+}
+
+#h3-cancelacion{
+    color: #665523;
+
+}
+
+#h4-cancelacion{
+    color: #665523;
+    margin-top: 1%;
+    margin-right: 40%; 
+    margin-left: 40%;
+    font-weight: bold;
+}
+
+#input-cancelacion{
+    margin-right: 40%; 
+    margin-left: 40%;
+    margin-bottom: 1%;
+}
+
+/* Mensaje de Confirmacion*/
+#h1-confirmacion{
+    color: rgb(201, 169, 64); 
+    margin-right: 20%; 
+    margin-left: 20%;
+}
+
+#h2-confirmacion{
+    color: rgb(138, 116, 46);
+}
+
+/*Manejo de errores*/
 .error{
     margin-top: 12%; 
     margin-bottom: 12%;
