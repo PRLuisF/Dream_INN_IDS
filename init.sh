@@ -1,7 +1,11 @@
-python3 -m venv .venv
-. .venv/bin/activate
+mkdir .venv
 
-pip install flask
-pip install requests
-pip install flask_sqlalchemy
-pip install mysql_connector_python
+touch Pipfile
+touch Pipfile.lock
+
+pipenv install flask
+pipenv install requests
+pipenv install flask_sqlalchemy
+pipenv install mysql_connector_python
+
+pipenv shell
