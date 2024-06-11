@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'Albra';
-    src: url(fonts/AlbraDisplayTRIAL-Regular.otf);
+    font-family: 'Lao';
+    src: url(fonts/lao-mn.ttf);
 }
 
 body{background-color: #fff;font-family: 'Raleway', sans-serif;font-size: 15px;line-height: 15px; color: #6e6e6e;}
@@ -9,7 +9,7 @@ body{background-color: #fff;font-family: 'Raleway', sans-serif;font-size: 15px;l
 
 .btn,a,a:hover{text-decoration: none;-webkit-transition: all 0.3s ease-in-out;-moz-transition: all 0.3s ease-in-out;-ms-transition: all 0.3s ease-in-out;-o-transition: all 0.3s ease-in-out;transition: all 0.3s ease-in-out;outline:0 ;}
 
-h1,h2,h3,h4,h5,h6{font-family:'Albra', sans-serif;line-height: 1em;margin: 0;}
+h1,h2,h3,h4,h5,h6{font-family:'Lao', sans-serif;line-height: 1em;margin: 0;}
 h1{font-size: 5em;}
 h1.title,h2{font-size: 2em;line-height: 3em;}
 h3{font-size: 1.5em; margin-bottom: 0.70em;}
