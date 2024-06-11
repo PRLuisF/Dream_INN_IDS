@@ -9,6 +9,31 @@ engine = create_engine("mysql+mysqlconnector://root@localhost:3305/dreaminn_db")
 #nota: la base de datos MySQL debe correr en el puerto 3305 (configurar el puerto de XAMPP, en mysql config)
     
 
+@app.route('/reservas', methods=['GET'])
+def obtener_reservas():
+    """Devuelve en formato JSON las reservas hechas y presentes en la base de datos"""
+    conn = engine.connect()
+    query = "SELECT * FROM reservas;"
+    try:
+        resultado = conn.execute(text(query))
+        conn.close()
+    except SQLAlchemyError as err:
+        return jsonify(str(err.__cause__))
+    
+    reservaciones = []
+    for row in resultado:
+        reservacion = {}
+        reservacion['id'] = row.id
+        reservacion['habitacion'] = row.habitacion
+        reservacion['cantidad_personas'] = row.cantidad_personas
+        reservacion['cantidad_noches'] = row.cantidad_noches
+        reservacion['nombre'] = row.nombre
+        reservacion['apellido'] = row.apellido
+        reservacion['email'] = row.email
+        reservacion['fecha_ingreso'] = row.fecha_ingreso
+        reservaciones.append(reservacion)
+    return jsonify(reservaciones), 200
+
 
 @app.route("/generar-reserva", methods = ["POST"])
 def generar_reserva():
@@ -58,7 +83,7 @@ def generar_reserva():
         
         return jsonify({"mensaje": "La reserva se ha creado correctamente", "id_reserva": id}), 201
 
-        
+
 @app.route("/cancelar-reserva/<id>", methods=['DELETE'])
 def cancelar_reserva(id):
     conn = engine.connect()
@@ -76,7 +101,6 @@ def cancelar_reserva(id):
             return jsonify({"message": "No existe la reserva de tal ID"}), 404
     except SQLAlchemyError as err:
         return jsonify(str(err.__cause__))
-
 
 
 @app.route("/habitaciones", methods=["GET"])
