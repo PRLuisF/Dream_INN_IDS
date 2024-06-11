@@ -1,23 +1,29 @@
-body{background-color: #fff;font-family: 'Raleway', sans-serif;font-size: 15px;line-height: 15px; color: #73726C;}
+@font-face {
+    font-family: 'Albra';
+    src: url(fonts/AlbraDisplayTRIAL-Regular.otf);
+}
+
+body{background-color: #fff;font-family: 'Raleway', sans-serif;font-size: 15px;line-height: 15px; color: #6e6e6e;}
 
 
 
 .btn,a,a:hover{text-decoration: none;-webkit-transition: all 0.3s ease-in-out;-moz-transition: all 0.3s ease-in-out;-ms-transition: all 0.3s ease-in-out;-o-transition: all 0.3s ease-in-out;transition: all 0.3s ease-in-out;outline:0 ;}
 
-h1,h2,h3,h4,h5,h6{font-family:'Old Standard TT', serif;line-height: 1em;margin: 0;}
+h1,h2,h3,h4,h5,h6{font-family:'Albra', sans-serif;line-height: 1em;margin: 0;}
 h1{font-size: 5em;}
 h1.title,h2{font-size: 2em;line-height: 3em;}
 h3{font-size: 1.5em; margin-bottom: 0.70em;}
 h4{font-size: 1.25em; margin-bottom: 0.75em;}
 p{margin-bottom: 1em;line-height: 1.5em;}
+#subtitle{font-family: 'Raleway';}
 
 
 .btn{border:none !important;border-radius: 0;padding: 5px 30px;}
-.btn-default{background:#bfa145;box-shadow: none !important;color: #fff;}
-.btn-default:hover, .btn-default:focus, .btn-default.focus, .btn-default:active, .btn-default.active{box-shadow: none !important;background:#756534;color: #fff;outline: none !important;}
+.btn-default{background:#455bbf;box-shadow: none !important;color: #fff;}
+.btn-default:hover, .btn-default:focus, .btn-default.focus, .btn-default:active, .btn-default.active{box-shadow: none !important;background:#2d376d;color: #fff;outline: none !important;}
 
-.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus{background-color: #bfa145;border-color: #bfa145;}
-.pagination>li>a, .pagination>li>span{color: #bfa145;}
+.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus{background-color: #455bbf;border-color: #455bbf;}
+.pagination>li>a, .pagination>li>span{color: #455bbf;}
 .spacer{padding:6em 0; }
 
 /*nav*/
@@ -37,34 +43,34 @@ p{margin-bottom: 1em;line-height: 1.5em;}
 .banner .welcome-message{position: absolute;left: 0;right:0;bottom:0;top:0;text-align: center;}
 .banner .welcome-message .wrap-info{display: table;height: 100%;width: 100%;}
 .banner .welcome-message .wrap-info .information{display: table-cell;vertical-align: middle;}
-.banner .arrow-nav{position: absolute;bottom:-3.5em;background-color: #bfa145;height: 7em;width: 7em;display: inline-block;z-index: 100;left: 50%;margin-left: -52px;color: #fff;border-radius: 50%;}
+.banner .arrow-nav{position: absolute;bottom:-3.5em;background-color: #455bbf;height: 7em;width: 7em;display: inline-block;z-index: 100;left: 50%;margin-left: -52px;color: #fff;border-radius: 50%;}
 .banner .arrow-nav i{font-size: 5em;line-height:105px;}
-.banner .arrow-nav:hover{background: #756534;}
+.banner .arrow-nav:hover{background: #2d376d;}
 
 
 /*reserve-info*/
 .reserve-info{background-color: #fff;}
 
-.services{background-color:#dedbd3; }
-.services .caption{background-color: #b9b2a0;color: #46433b;padding: 1.5em;}
-.services .caption a {color: #585650;font-size: 1.25em;}
-.services .caption a:hover{color: #fff;}
+.services{background-color:#eeeeee; }
+.services .caption{background-color: #fff;padding: 1.5em;}
+.services .caption a {color: #455bbf;;font-size: 1.25em;}
+.services .caption a:hover{color: #2d376d;}
 .carousel-control{width: 10%;background: none !important;}
 .carousel-control i.fa{position: absolute;left: 0;right: 0;top: 50%;margin-top: -10px;}
 .carousel img{width: 100%;}
 
 /*footer*/
-footer{background-color:#585650;color: #AEAEAC;}
+footer{background-color:#abb5d8;color: #f1f1f1;}
 footer.spacer{padding: 3em 0;}
-footer h4{color: #DCDCDC;}
-footer a,footer p{line-height: 1.5em;font-size: 0.85em;color: #AEAEAC;}
+footer h4{color: #f1f1f1;}
+footer a,footer p{line-height: 1.5em;font-size: 0.85em;color: #f1f1f1;}
 footer a:hover{color: #fff;}
 footer .subscribe .form-control{height: 30px;padding: 4px 12px;border: none;}
 footer .subscribe .input-group-btn:last-child>.btn{margin: 0;}
 footer .subscribe .input-group{margin-bottom: 1em;}
 footer .subscribe .social a{font-size: 1.5em;margin-right: 0.25em;}
-.copyright{background-color: #252423;padding: 0.6em 0;font-size: 0.85em;color: #7F7F7F;}
-.copyright a{color: #AEAEAC;}
+.copyright{background-color: #6e7aa3;padding: 0.6em 0;font-size: 0.85em;color: #fff;}
+.copyright a{color: #acacae;}
 /*footer*/
 
 .toTop{position: fixed;right: 1em; bottom: 1em;background:rgba(0,0,0,0.5);width: 35px; height: 35px;text-align: center;color: #fff;font-size: 2em; }
@@ -104,12 +110,13 @@ div.selector option{ padding: 10px;}
 
 /*rooms and tariff*/
 .rooms{margin-bottom: 2em;}
-.rooms .info{padding: 1.5em;background-color: #E8E7E0;}
+.rooms .info{padding: 1.5em;background-color: #eeeeee;}
 
 
 .room-features .amenitites li{margin-bottom: 1em;}
-.room-features .size-price{background-color: #C7C5BB;padding: 2em 0;text-align: center;color: #fff;height: 10.97em;line-height: 3em;}
+.room-features .size-price{background-color: #455bbf;padding: 2em 0;text-align: center;color: #fff;height: 10.97em;line-height: 3em;}
 .room-features .size-price span{display: block;font-size: 2em;}
+.info { color: #888888 }
 
 
 .gallery .gallery-image{margin-bottom: 2em;display: inline-block;}
@@ -137,7 +144,7 @@ body::-webkit-scrollbar {
     ::-webkit-scrollbar-thumb {
 /*        -webkit-border-radius: 10px;
         border-radius: 10px;*/
-        background:#bfa145; 
+        background:#455bbf; 
     }
     ::-webkit-scrollbar-thumb:window-inactive {
         background: #ddd; 
@@ -151,8 +158,8 @@ body::-webkit-scrollbar {
 }
 @media (max-width: 767px){	
 	.navbar-toggle{margin-top: 23px;}
-    .navbar-default .navbar-toggle{background-color: #bfa145;}
-    .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus{background-color: #5F5021;}
+    .navbar-default .navbar-toggle{background-color: #455bbf;}
+    .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus{background-color: #21275f;}
     .navbar-default .navbar-toggle .icon-bar {background-color: #fff;}
     .navbar-nav > li > a{line-height: 1em;}
 
@@ -180,17 +187,19 @@ body::-webkit-scrollbar {
 }
 
 #title-cancelacion{
-    color: #bfa145;
+    color: #5f71b1;
     font-size:400%;
 }
 
 #h3-cancelacion{
-    color: #665523;
-
+    color: #6e6e6e;
+    font-family: 'Raleway';
+    margin-top: 3% ;
 }
 
 #h4-cancelacion{
-    color: #665523;
+    color: #5f71b1;
+    font-family: 'Raleway';
     margin-top: 1%;
     margin-right: 40%; 
     margin-left: 40%;
@@ -205,13 +214,13 @@ body::-webkit-scrollbar {
 
 /* Mensaje de Confirmacion*/
 #h1-confirmacion{
-    color: rgb(201, 169, 64); 
+    color: #5f71b1; 
     margin-right: 20%; 
     margin-left: 20%;
 }
 
 #h2-confirmacion{
-    color: rgb(138, 116, 46);
+    color: #6e6e6e;
 }
 
 /*Manejo de errores*/
@@ -222,18 +231,19 @@ body::-webkit-scrollbar {
 }
 
 .error-h1{
-    color: rgb(201, 169, 64);
+    color: #5f71b1;
 }
 .error-h2{
-    color: rgb(138, 116, 46);
+    color: #6e6e6e;
+    font-family: 'Raleway';
     line-height: 1;
 }
 .error-a{
-    color: rgb(138, 116, 46);
+    color: #5f71b1;
     line-height: 1;
 }
 
 .error-a:hover{
-    color: rgb(73, 62, 24);
+    color: #314085;
     font-weight: 600;
 }
