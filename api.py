@@ -125,7 +125,14 @@ def update_habitacion(habitacion):
     conn = engine.connect()
     mod_data = request.get_json()
 
-    query = f"UPDATE habitaciones SET cantidad_personas = {mod_data['cantidad_personas']}, precio = {mod_data['precio']}, descripcion = '{mod_data['descripcion']}', categoria = '{mod_data['categoria']}' WHERE habitacion = {habitacion}"
+    query = f"UPDATE habitaciones SET "
+    for columna,dato in mod_data.items():
+        if type(dato) == str:
+            query += f"{columna} = '{dato}',"
+        else:
+            query += f"{columna} = {dato} ,"
+    query = query[:-1]
+    query += f"WHERE habitacion = {habitacion};"
  
     query_validation = f"SELECT * FROM habitaciones WHERE habitacion = {habitacion};"
     try:
