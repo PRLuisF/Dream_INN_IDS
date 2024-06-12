@@ -12,25 +12,25 @@
     <h3>Realizar una Reserva</h3>
         <form class="wowload fadeInRight" action="{{url_for('hacer_reserva')}}" method="POST">
             <div class="form-group">
-                <input type="text" class="form-control" id="id_nombre" placeholder="Nombre">
+                <input type="text" class="form-control" id="id_nombre" placeholder="Nombre" name="nombre" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" required>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" id="id_apellido" placeholder="Apellido">
+              <input type="text" class="form-control" id="id_apellido" placeholder="Apellido" name="apellido" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" required>
             </div>
             <div class="form-group">
-                <input type="email" class="form-control" id="id_email" placeholder="Email">
+                <input type="email" class="form-control" id="id_email" placeholder="Email" name="email" required >
             </div>   
             <div class="form-group">
-              <select class="form-control" id="id_habitacion">
-                <option>Habitación</option>
+              <select class="form-control" id="id_habitacion" name="habitacion" required>
+                <option value="">Seleccionar Habitación</option>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
               </select>       
             </div>
             <div class="form-group">
-              <select class="form-control" id="id_personas">
-                <option>Cantidad de Personas</option>
+              <select class="form-control" id="id_personas" name="cant_personas" required>
+                <option value="">Cantidad de Personas</option>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -39,11 +39,11 @@
             <div class="form-group">
                 <div class="row">
                 <div class="col-xs-6">
-                  <input type="date" min="2024-07-01" max="2025-06-30" class="form-control" id="id_fecha">
+                  <input type="date" min="2024-07-01" max="2025-06-30" class="form-control" id="id_fecha" name="fecha" required>
                 </div>        
                 <div class="col-xs-6">
-                <select class="form-control" id="id_noches">
-                  <option>Cant. Noches</option>
+                <select class="form-control" id="id_noches" name="cant_noches" required>
+                  <option value="">Noches</option>
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
