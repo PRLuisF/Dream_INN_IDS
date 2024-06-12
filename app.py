@@ -40,15 +40,14 @@ def hacer_reserva():
             if request_api.status_code == 409:
                 return render_template('reserva.html', mensaje = "La fecha ingresada no se encuentra disponible.")
             if request_api.status_code == 500:
-                return redirect(url_for('internal_server_error('))
+                return redirect(url_for('internal_server_error'))
             if request_api.status_code == 201:
                 request_api = request_api.json()
                 id = request_api["id_reserva"]
                 return render_template('mensaje_de_confirmacion.html', mensaje="La reserva se ha realizado exitosamente", id_reserva=id)
 
-
-        
     return render_template('reserva.html')
+
 
 @app.route('/cancelar-reserva', methods = ["GET", "POST"])
 def cancelar_reserva():
