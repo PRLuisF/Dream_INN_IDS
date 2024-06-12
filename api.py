@@ -9,6 +9,31 @@ engine = create_engine("mysql+mysqlconnector://root@localhost:3305/dreaminn_db")
 #nota: la base de datos MySQL debe correr en el puerto 3305 (configurar el puerto de XAMPP, en mysql config)
     
 
+@app.route('/reservas', methods=['GET'])
+def obtener_reservas():
+    """Devuelve en formato JSON las reservas hechas y presentes en la base de datos"""
+    conn = engine.connect()
+    query = "SELECT * FROM reservas;"
+    try:
+        resultado = conn.execute(text(query))
+        conn.close()
+    except SQLAlchemyError as err:
+        return jsonify(str(err.__cause__))
+    
+    reservaciones = []
+    for row in resultado:
+        reservacion = {}
+        reservacion['id'] = row.id
+        reservacion['habitacion'] = row.habitacion
+        reservacion['cantidad_personas'] = row.cantidad_personas
+        reservacion['cantidad_noches'] = row.cantidad_noches
+        reservacion['nombre'] = row.nombre
+        reservacion['apellido'] = row.apellido
+        reservacion['email'] = row.email
+        reservacion['fecha_ingreso'] = row.fecha_ingreso
+        reservaciones.append(reservacion)
+    return jsonify(reservaciones), 200
+
 
 @app.route("/generar-reserva", methods = ["POST"])
 def generar_reserva():
@@ -58,7 +83,7 @@ def generar_reserva():
         
         return jsonify({"mensaje": "La reserva se ha creado correctamente", "id_reserva": id}), 201
 
-        
+
 @app.route("/cancelar-reserva/<id>", methods=['DELETE'])
 def cancelar_reserva(id):
     conn = engine.connect()
@@ -76,7 +101,6 @@ def cancelar_reserva(id):
             return jsonify({"message": "No existe la reserva de tal ID"}), 404
     except SQLAlchemyError as err:
         return jsonify(str(err.__cause__))
-
 
 
 @app.route("/habitaciones", methods=["GET"])
@@ -125,7 +149,14 @@ def update_habitacion(habitacion):
     conn = engine.connect()
     mod_data = request.get_json()
 
-    query = f"UPDATE habitaciones SET cantidad_personas = {mod_data['cantidad_personas']}, precio = {mod_data['precio']}, descripcion = '{mod_data['descripcion']}', categoria = '{mod_data['categoria']}' WHERE habitacion = {habitacion}"
+    query = f"UPDATE habitaciones SET "
+    for columna,dato in mod_data.items():
+        if type(dato) == str:
+            query += f"{columna} = '{dato}',"
+        else:
+            query += f"{columna} = {dato} ,"
+    query = query[:-1]
+    query += f"WHERE habitacion = {habitacion};"
  
     query_validation = f"SELECT * FROM habitaciones WHERE habitacion = {habitacion};"
     try:
