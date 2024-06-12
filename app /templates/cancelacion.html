@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- write us -> cform de cancelacion user necesita poner id de compra (solo estructura) -->
+
+<div class="container2">
+	<h1 id="title-cancelacion">Cancelar Reserva</h1>
+
+<!-- form -->
+
+	<h3 id="h3-cancelacion">Para cancelar la reserva ingrese el numero generado al realizar la misma</h3>
+		<form id="deleteform" action="{{ url_for('cancelar_reserva')}}" method="POST">
+		<div id="input-cancelacion">	
+			<input type="number" class="form-control" id="id_reserva" name="id_reserva" placeholder="Número de Reserva">
+		</div>
+				
+		<button type="submit" onclick="eliminarReserva()" class="btn btn-default">Cancelar Reserva</button>
+		</form>
+
+		<h4 id="h4-cancelacion">{{mensaje}}</h4>
+
+		
+</div>	
+<script src="{{ url_for('static', filename='assets/script.js')}}"></script>
+<!-- form -->
+
+{% endblock %}

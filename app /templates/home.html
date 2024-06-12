@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- banner -->
+<div class="banner">    	   
+    <img src="{{ url_for('static', filename='images/photos/banner.jpg')}}"  class="img-responsive" alt="slide">
+    <div class="welcome-message">
+        <div class="wrap-info">
+            <div class="information">
+                <h1  class="animated fadeInDown">Dream INN</h1>
+                <p class="animated fadeInUp">Te damos la bienvenida al hotel de tus sueños.</p>                
+            </div>
+        </div>
+    </div>
+</div>
+<!-- banner-->
+
+<!-- servicios -->
+<div class="spacer services wowload fadeInUp">
+    <div class="container">
+        <div class="row">
+            <!-- Ver habitaciones -->
+            <div class="col-sm-4">
+                <div class="item active"><img src="{{ url_for('static', filename='images/photos/8.jpg')}}" class="img-responsive" alt="slide"></div>                
+                <div class="caption">Ver habitaciones<a href="{{ url_for('habitaciones')}}" class="pull-right"><i class="fa fa-edit"></i></a></div>
+            </div>
+            <!-- Ver habitaciones -->
+    
+            <!-- Reservar habitación -->
+            <div class="col-sm-4">
+                <div class="item active"><img src="{{ url_for('static', filename='images/photos/6.jpg')}}" class="img-responsive" alt="slide"></div>
+                <div class="caption">Reservar habitación<a href="{{ url_for('hacer_reserva')}}" class="pull-right"><i class="fa fa-edit"></i></a></div>
+            </div>
+            <!-- Reservar habitación -->
+    
+            <!-- Cancelar reserva -->
+            <div class="col-sm-4">
+    
+                <div class="item active"><img src="{{ url_for('static', filename='images/photos/1.jpg')}}" class="img-responsive" alt="slide"></div>
+                <div class="caption">Cancelar reserva<a href="{{ url_for('cancelar_reserva')}}" class="pull-right"><i class="fa fa-edit"></i></a></div>
+            </div>
+            <!-- Cancelar reserva -->
+        </div>
+    </div>
+    </div>
+    <!-- servicios -->
+{% endblock %}
