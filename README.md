@@ -29,4 +29,6 @@ Para inicializar la base de datos, se debe importar el archivo tablas.sql en el 
 2. En 'browse files', seleccionar el archivo tablas.sql
 3. Hacer click en Import
 
-Una vez hecho esto, se habrá creado la base de datos dreaminn_db, y desde Xampp se podrá acceder a las tres tablas que contiene (Habitaciones_Particulares, Reserva_Especifica, Tipo_Habitaciones).
+Una vez hecho esto, se habrá creado la base de datos dreaminn_db, y desde Xampp se podrá acceder a las dos tablas que contiene (habitaciones y reservas).
+Para modificar, agregar o quitar datos de la base, se deben utilizar los servicios de la API correspondientes, junto con
+Postman.
