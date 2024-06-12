@@ -100,7 +100,7 @@ def cancelar_reserva(id):
             conn.close()
             return jsonify({"message": "No existe la reserva de tal ID"}), 404
     except SQLAlchemyError as err:
-        return jsonify(str(err.__cause__))
+        return jsonify(str(err.__cause__)), 500
 
 
 @app.route("/habitaciones", methods=["GET"])
@@ -114,7 +114,7 @@ def mostrar_habitaciones():
         habs = conn.execute(text(query))
         conn.close()
     except SQLAlchemyError as err:
-        return jsonify(str(err.__cause__))
+        return jsonify(str(err.__cause__)), 500
 
     datos = []
     for dato in habs:
