@@ -9,7 +9,8 @@ def home():
 
 @app.route('/habitaciones')
 def habitaciones():
-    return render_template('habitaciones.html')
+    habitaciones = requests.get("http://localhost:5000/habitaciones").json()
+    return render_template('habitaciones.html', habitaciones=habitaciones)
 
 @app.route('/about') 
 def about():
