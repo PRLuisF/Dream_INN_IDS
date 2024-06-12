@@ -19,12 +19,12 @@ def about():
 @app.route('/reserva', methods = ["GET", "POST"])
 def hacer_reserva():
     if request.method == "POST":
-        nombre = request.form.get('id_nombre')
-        apellido = request.form.get('id_apellido')
-        email = request.form.get('id_email')
-        habitacion = request.form.get('id_habitacion')
+        nombre = request.form.get('nombre')
+        apellido = request.form.get('apellido')
+        email = request.form.get('email')
+        habitacion = request.form.get('habitacion')
         fecha = request.form.get('fecha')
-        noches = request.form.get('id_noches')
+        noches = request.form.get('cant_noches')
         cantidad_personas = request.form.get('cant_personas')
 
         if nombre and apellido and email and habitacion and fecha and noches and cantidad_personas:
