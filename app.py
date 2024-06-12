@@ -24,6 +24,15 @@ def about():
 
 @app.route('/reserva', methods = ["GET", "POST"])
 def hacer_reserva():
+    respuesta = requests.get("http://localhost:5000/habitaciones")
+    if respuesta.status_code == 200:
+        rooms = []
+        habitaciones_json = respuesta.json()
+        for hab in habitaciones_json:
+            rooms.append(hab['habitacion'])
+    elif respuesta.status_code == 500:
+        return abort(500)
+    
     if request.method == "POST":
         nombre = request.form.get('nombre')
         apellido = request.form.get('apellido')
@@ -43,25 +52,16 @@ def hacer_reserva():
             request_api = requests.post("http://localhost:5000/generar-reserva", json = datos)
 
             if request_api.status_code == 400:
-                return render_template('reserva.html', mensaje = "La cantidad de personas ingresada supera la capacidad de la habitación.")
+                return render_template('reserva.html', mensaje = "La cantidad de personas ingresada supera la capacidad de la habitación.", habitaciones=rooms)
             if request_api.status_code == 409:
-                return render_template('reserva.html', mensaje = "La fecha ingresada no se encuentra disponible.")
+                return render_template('reserva.html', mensaje = "La fecha ingresada no se encuentra disponible.", habitaciones=rooms)
             if request_api.status_code == 500:
                 return abort(500)
             if request_api.status_code == 201:
                 request_api = request_api.json()
                 id = request_api["id_reserva"]
                 return render_template('mensaje_de_confirmacion.html', mensaje="La reserva se ha realizado exitosamente", id_reserva=id)
-
-    respuesta = requests.get("http://localhost:5000/habitaciones")
-    if respuesta.status_code == 200:
-        rooms = []
-        habitaciones_json = respuesta.json()
-        for hab in habitaciones_json:
-            rooms.append(hab['habitacion'])
-        return render_template('reserva.html', habitaciones=rooms)
-    elif respuesta.status_code == 500:
-        return abort(500)
+    return render_template('reserva.html', habitaciones=rooms)
 
 
 @app.route('/cancelar-reserva', methods = ["GET", "POST"])
