@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 from flask import Flask, render_template, request, redirect, url_for
 import requests
-=======
-from flask import Flask, render_template, request
->>>>>>> development
 
 app = Flask(__name__)
 
@@ -13,7 +9,6 @@ def home():
 
 @app.route('/habitaciones')
 def habitaciones():
-<<<<<<< HEAD
     habitaciones = requests.get("http://localhost:5000/habitaciones")
     if habitaciones.status_code == 200:
         respuesta_hab = habitaciones.json()
@@ -22,9 +17,6 @@ def habitaciones():
         return render_template("500.html")
 
     return render_template('habitaciones.html', habitaciones=respuesta_hab)
-=======
-    return render_template('habitaciones.html')
->>>>>>> development
 
 @app.route('/about') 
 def about():
@@ -33,15 +25,10 @@ def about():
 @app.route('/reserva', methods = ["GET", "POST"])
 def hacer_reserva():
     if request.method == "POST":
-<<<<<<< HEAD
-=======
-        """
->>>>>>> development
         nombre = request.form.get('nombre')
         apellido = request.form.get('apellido')
         email = request.form.get('email')
         habitacion = request.form.get('habitacion')
-<<<<<<< HEAD
         fecha = request.form.get('fecha')
         noches = request.form.get('cant_noches')
         cantidad_personas = request.form.get('cant_personas')
@@ -68,34 +55,13 @@ def hacer_reserva():
 
     return render_template('reserva.html')
 
-
-=======
-        personas = request.form.get('cant_personas')
-        fecha = request.form.get('fecha')
-        noches = request.form.get('cant_noches')
-
-        Falta integrar con API para verificar los datos y
-        subirlos a la base de datos.
-        """
-        return render_template('mensaje_de_confirmacion.html', mensaje="La reserva se ha realizado exitosamente", id_reserva="1") #"1" es un placeholder, el ID debería generarse incrementativamente al guardar la reserva en la base de datos.
-    return render_template('reserva.html')
-
->>>>>>> development
 @app.route('/cancelar-reserva', methods = ["GET", "POST"])
 def cancelar_reserva():
     if request.method == "POST":
         nreserva = request.form.get('id_reserva')
-<<<<<<< HEAD
         respuesta = requests.delete(f"http://127.0.0.1:5000/cancelar-reserva/{nreserva}")
         if respuesta.status_code == 202:
             return render_template('mensaje_de_confirmacion.html', mensaje="La reserva se ha cancelado exitosamente", id_reserva=nreserva)
-        elif respuesta.status_code == 404:
-=======
-        reservas = {1,2,3,4,5,6,7} #cuando se integra con la api se cambia por la request correspondiente
-        if int(nreserva) in reservas: #cuando se integra con la api se cambia al estado de la request 
-            return render_template('mensaje_de_confirmacion.html', mensaje="La reserva se ha cancelado exitosamente", id_reserva=nreserva)
-        else:
->>>>>>> development
             return render_template('cancelacion.html', mensaje="No se encontró ninguna reserva con el número ingresado")
     return render_template('cancelacion.html')
 
