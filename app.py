@@ -9,8 +9,14 @@ def home():
 
 @app.route('/habitaciones')
 def habitaciones():
-    habitaciones = requests.get("http://localhost:5000/habitaciones").json()
-    return render_template('habitaciones.html', habitaciones=habitaciones)
+    habitaciones = requests.get("http://localhost:5000/habitaciones")
+    if habitaciones.status_code == 200:
+        respuesta_hab = habitaciones.json()
+    
+    elif habitaciones.status_code == 500:
+        return render_template("500.html")
+
+    return render_template('habitaciones.html', habitaciones=respuesta_hab)
 
 @app.route('/about') 
 def about():
