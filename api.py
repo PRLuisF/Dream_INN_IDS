@@ -65,9 +65,9 @@ def generar_reserva():
                     noches_reserva = timedelta(days = fil.cantidad_noches)
 
                     if fecha_reserva <= fecha_ingreso < fecha_reserva + noches_reserva and fil.habitacion == datos_body["habitacion"]:
-                        return jsonify({"mensaje": "Error: la habitacion esta ocupada en esas fechas."}), 400
+                        return jsonify({"mensaje": "Error: la habitacion esta ocupada en esas fechas."}), 409
                     elif fecha_reserva < fecha_ingreso + cant_noches <= fecha_reserva + noches_reserva and fil.habitacion == datos_body["habitacion"]:
-                        return jsonify({"mensaje": "Error: la habitacion esta ocupada en esas fechas."}), 400
+                        return jsonify({"mensaje": "Error: la habitacion esta ocupada en esas fechas."}), 409
 
             # guardar reserva    
             conn.execute(query)

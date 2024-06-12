@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import requests
 
 app = Flask(__name__)
@@ -18,18 +18,36 @@ def about():
 @app.route('/reserva', methods = ["GET", "POST"])
 def hacer_reserva():
     if request.method == "POST":
-        """
         nombre = request.form.get('id_nombre')
         apellido = request.form.get('id_apellido')
         email = request.form.get('id_email')
         habitacion = request.form.get('id_habitacion')
         fecha = request.form.get('fecha')
         noches = request.form.get('id_noches')
+        cantidad_personas = request.form.get('cant_personas')
 
-        Falta integrar con API para verificar los datos y
-        subirlos a la base de datos.
-        """
-        return render_template('mensaje_de_confirmacion.html', mensaje="La reserva se ha realizado exitosamente", id_reserva="1") #"1" es un placeholder, el ID debería generarse incrementativamente al guardar la reserva en la base de datos.
+        if nombre and apellido and email and habitacion and fecha and noches and cantidad_personas:
+            habitacion = int(habitacion)
+            noches = int(noches)
+            cantidad_personas = int(cantidad_personas)
+
+            datos = {"nombre": nombre, "apellido": apellido, "email": email, "habitacion": habitacion, "fecha_ingreso": fecha,
+                     "cantidad_noches": noches, "cantidad_personas": cantidad_personas}
+            request_api = requests.post("http://localhost:5000/generar-reserva", json = datos)
+
+            if request_api.status_code == 400:
+                return render_template('reserva.html', mensaje = "La cantidad de personas ingresada supera la capacidad de la habitación.")
+            if request_api.status_code == 409:
+                return render_template('reserva.html', mensaje = "La fecha ingresada no se encuentra disponible.")
+            if request_api.status_code == 500:
+                return redirect(url_for('internal_server_error('))
+            if request_api.status_code == 201:
+                request_api = request_api.json()
+                id = request_api["id_reserva"]
+                return render_template('mensaje_de_confirmacion.html', mensaje="La reserva se ha realizado exitosamente", id_reserva=id)
+
+
+        
     return render_template('reserva.html')
 
 @app.route('/cancelar-reserva', methods = ["GET", "POST"])
