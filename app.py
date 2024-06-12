@@ -37,10 +37,10 @@ def hacer_reserva():
 def cancelar_reserva():
     if request.method == "POST":
         nreserva = request.form.get('id_reserva')
-        reservas = {1,2,3,4,5,6,7} #cuando se integra con la api se cambia por la request correspondiente
-        if int(nreserva) in reservas: #cuando se integra con la api se cambia al estado de la request 
+        respuesta = requests.delete(f"http://127.0.0.1:5000/cancelar-reserva/{nreserva}")
+        if respuesta.status_code == 202:
             return render_template('mensaje_de_confirmacion.html', mensaje="La reserva se ha cancelado exitosamente", id_reserva=nreserva)
-        else:
+        elif respuesta.status_code == 404:
             return render_template('cancelacion.html', mensaje="No se encontró ninguna reserva con el número ingresado")
     return render_template('cancelacion.html')
 
