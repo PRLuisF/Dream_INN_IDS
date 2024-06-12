@@ -77,10 +77,6 @@ def cancelar_reserva():
             return abort(500)
     return render_template('cancelacion.html')
 
-@app.route('/detalles')
-def detalle_habitacion():
-    return render_template('room-details.html')
-
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
