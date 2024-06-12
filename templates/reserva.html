@@ -23,9 +23,9 @@
             <div class="form-group">
               <select class="form-control" id="id_habitacion" name="habitacion" required>
                 <option value="">Seleccionar Habitación</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
+                {% for hab in habitaciones %}
+                  <option>{{ hab }}</option>
+                {% endfor %}
               </select>       
             </div>
             <div class="form-group">

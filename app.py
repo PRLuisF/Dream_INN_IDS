@@ -53,15 +53,28 @@ def hacer_reserva():
                 id = request_api["id_reserva"]
                 return render_template('mensaje_de_confirmacion.html', mensaje="La reserva se ha realizado exitosamente", id_reserva=id)
 
-    return render_template('reserva.html')
+    respuesta = requests.get("http://localhost:5000/habitaciones")
+    if respuesta.status_code == 200:
+        rooms = []
+        habitaciones_json = respuesta.json()
+        for hab in habitaciones_json:
+            rooms.append(hab['habitacion'])
+        return render_template('reserva.html', habitaciones=rooms)
+    elif respuesta.status_code == 500:
+        return abort(500)
+
 
 @app.route('/cancelar-reserva', methods = ["GET", "POST"])
 def cancelar_reserva():
     if request.method == "POST":
         nreserva = request.form.get('id_reserva')
-        respuesta = requests.delete(f"http://127.0.0.1:5000/cancelar-reserva/{nreserva}")
+        respuesta = requests.delete(f"http://localhost:5000/cancelar-reserva/{nreserva}")
         if respuesta.status_code == 202:
             return render_template('mensaje_de_confirmacion.html', mensaje="La reserva se ha cancelado exitosamente", id_reserva=nreserva)
+        elif respuesta.status_code == 404:
+            return render_template('cancelacion.html', mensaje="No se encontró ninguna reserva con el número ingresado")
+        elif respuesta.status_code == 500:
+            return abort(500)
     return render_template('cancelacion.html')
 
 @app.route('/detalles')

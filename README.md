@@ -32,3 +32,4 @@ Para inicializar la base de datos, se debe importar el archivo tablas.sql en el 
 Una vez hecho esto, se habrá creado la base de datos dreaminn_db, y desde Xampp se podrá acceder a las dos tablas que contiene (habitaciones y reservas).
 Para modificar, agregar o quitar datos de la base, se deben utilizar los servicios de la API correspondientes, junto con
 Postman.
+Nota: se debe configurar el puerto de MySQL de XAMPP para que sea el 3305, así la base de datos se conectará con la API correctamente.
