@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, abort
 import requests
 
 app = Flask(__name__)
@@ -47,7 +47,7 @@ def hacer_reserva():
             if request_api.status_code == 409:
                 return render_template('reserva.html', mensaje = "La fecha ingresada no se encuentra disponible.")
             if request_api.status_code == 500:
-                return redirect(url_for('internal_server_error'))
+                return abort(500)
             if request_api.status_code == 201:
                 request_api = request_api.json()
                 id = request_api["id_reserva"]
@@ -62,7 +62,6 @@ def cancelar_reserva():
         respuesta = requests.delete(f"http://127.0.0.1:5000/cancelar-reserva/{nreserva}")
         if respuesta.status_code == 202:
             return render_template('mensaje_de_confirmacion.html', mensaje="La reserva se ha cancelado exitosamente", id_reserva=nreserva)
-            return render_template('cancelacion.html', mensaje="No se encontró ninguna reserva con el número ingresado")
     return render_template('cancelacion.html')
 
 @app.route('/detalles')
