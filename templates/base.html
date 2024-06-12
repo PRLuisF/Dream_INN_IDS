@@ -36,6 +36,7 @@
 </head>
 
 <body id="home">
+  <div class="container_body">
   <!-- header -->
   <nav class="navbar  navbar-default" role="navigation">
     <div class="container">
@@ -47,7 +48,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="{{ url_for('home')}}"><img src="{{ url_for('static', filename='images/logo.png')}}"  alt="holiday crown"></a>
+        <a class="navbar-brand" href="{{ url_for('home')}}"><img src="{{ url_for('static', filename='images/logo.png')}}"  alt="holiday crown" height="53px"></a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -56,15 +57,16 @@
         <ul class="nav navbar-nav">        
           <li><a href="{{ url_for('home')}}">Home</a></li>
           <li><a href="{{ url_for('habitaciones')}}">Habitaciones</a></li>        
-          <li><a href="{{ url_for('about')}}">About</a></li>
           <li><a href="{{ url_for('hacer_reserva')}}">Reservar</a></li>
           <li><a href="{{ url_for('cancelar_reserva')}}">Cancelar Reserva</a></li>
+          <li><a href="{{ url_for('about')}}">About</a></li>
         </ul>
       </div><!-- Wnavbar-collapse -->
     </div><!-- container-fluid -->
   </nav>
   <!-- header -->
   {% block content %}{% endblock %}
+  </div>
 
   <footer class="spacer">
       <div class="container">
@@ -75,23 +77,19 @@
               </div>              
               
               <div class="col-sm-3">
-                  <h4>Quick Links</h4>
+                  <h4>Atajos</h4>
                   <ul class="list-unstyled">
                       <li><a href="{{ url_for('habitaciones')}}">Habitaciones</a></li>       
-                      <li><a href="{{ url_for('about')}}">About</a></li>
                       <li><a href="{{ url_for('hacer_reserva')}}">Reservar</a></li>
                       <li><a href="{{ url_for('cancelar_reserva')}}">Cancelar Reserva</a></li>
+                      <li><a href="{{ url_for('about')}}">About</a></li>
                   </ul>
               </div>
               <div class="col-sm-4 subscribe">
-                  <h4>Redes Sociales</h4>
+                  <h4>Links Importantes</h4>
                   <div class="social">
-                  <a href="#"><i class="fa fa-facebook-square" data-toggle="tooltip" data-placement="top" data-original-title="facebook"></i></a>
-                  <a href="#"><i class="fa fa-instagram"  data-toggle="tooltip" data-placement="top" data-original-title="instragram"></i></a>
-                  <a href="#"><i class="fa fa-twitter-square" data-toggle="tooltip" data-placement="top" data-original-title="twitter"></i></a>
-                  <a href="#"><i class="fa fa-pinterest-square" data-toggle="tooltip" data-placement="top" data-original-title="pinterest"></i></a>
-                  <a href="#"><i class="fa fa-tumblr-square" data-toggle="tooltip" data-placement="top" data-original-title="tumblr"></i></a>
-                  <a href="#"><i class="fa fa-youtube-square" data-toggle="tooltip" data-placement="top" data-original-title="youtube"></i></a>
+                    <a href="https://github.com/PRLuisF/Dream_INN_IDS"><i class="fa fa-github-square" data-toggle="tooltip" data-placement="top" data-original-title="GitHub"></i></a>
+                    <a href="https://trello.com/b/DTlRp5m1/tablero-kanban"><i class="fa fa-trello" data-toggle="tooltip" data-placement="top" data-original-title="Trello"></i></a>
                   </div>
               </div>
           </div>
@@ -104,6 +102,5 @@
 
   <div class="text-center copyright">© 2024 Todos los derechos reservados</div>
 
-  <a href="{{ url_for('home')}}" class="toTop scroll"><i class="fa fa-angle-up"></i></a>
 </body>
 </html>
