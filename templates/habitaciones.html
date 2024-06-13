@@ -8,7 +8,7 @@
 
 <div class="row">
 {% for habitacion in habitaciones %}
-  <div class="col-sm-6 wowload fadeInUp"><div class="rooms"><img src="{{ url_for('static', filename='images/photos/8.jpg')}}" class="img-responsive"><div class="info"><h3>Habitación {{ habitacion['habitacion'] }}</h3><p>Descripción: {{ habitacion['descripcion'] }}</p><p>Precio: {{ habitacion['precio'] }}</p><p>Categoría: {{ habitacion['categoria'] }}</p><p>Cantidad de Personas: {{ habitacion['cantidad_personas'] }}</p></div></div></div>  
+  <div class="col-sm-6 wowload fadeInUp"><div class="rooms"><img src="{{ url_for('static', filename='images/photos/habitacion1.jpg')}}" class="img-responsive"><div class="info"><h3>Habitación {{ habitacion['habitacion'] }}</h3><p>Descripción: {{ habitacion['descripcion'] }}</p><p>Precio: {{ habitacion['precio'] }}</p><p>Categoría: {{ habitacion['categoria'] }}</p><p>Cantidad de Personas: {{ habitacion['cantidad_personas'] }}</p></div></div></div>  
 {% endfor %}
 </div>
 
