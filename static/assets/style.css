@@ -107,6 +107,12 @@ div.selector select{height: 36px !important;top: -2px; cursor: pointer; backgrou
 div.selector option{ padding: 10px;}
 .checkbox label{padding-left: 0;}
 .checkbox input[type=checkbox]{margin-left: -10px;}
+
+#error-reserva {  
+    font-family: 'Raleway';
+    text-align: center;
+    padding-top: 5%;
+}
 /*unform*/
 
 
