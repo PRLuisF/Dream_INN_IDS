@@ -1,9 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container2">
+<div class="container3">
 
     <h1 id="h1-confirmacion">{{mensaje}}</h1>
     <h2 id="h2-confirmacion">Numero de Reserva: {{ id_reserva }}</h2>
+    <div class="container4">
+        <ul class="list-confirmacion">
+            <li class="dato-confirmacion">Nombre: {{nombre}}</li>
+            <li class="dato-confirmacion">Apellido: {{apellido}}</li>
+            <li class="dato-confirmacion">Email: {{email}}</li>
+            <li class="dato-confirmacion">Habitación: {{habitacion}}</li>
+            <li class="dato-confirmacion">Fecha: {{fecha}}</li>
+            <li class="dato-confirmacion">Cantidad de Noches: {{cant_noches}}</li>
+            <li class="dato-confirmacion">Cantidad de Personas: {{cant_personas}}</li>
+        </ul>
+    </div>
 </div>
+
 
 {% endblock %}

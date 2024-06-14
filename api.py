@@ -91,11 +91,21 @@ def cancelar_reserva(id):
     try:
         val_result = conn.execute(text(validation_query))
         if val_result.rowcount != 0:
+            res = val_result.first()
+            reserva = {}
+            reserva['nombre'] = res.nombre
+            reserva['apellido'] = res.apellido
+            reserva['email'] = res.email
+            reserva['habitacion'] = res.habitacion
+            reserva['cantidad_personas'] = res.cantidad_personas
+            reserva['fecha_ingreso'] = res.fecha_ingreso
+            reserva['cantidad_noches'] = res.cantidad_noches
+        
             query1 = f"DELETE FROM reservas WHERE id = {id};"
             resultado1 = conn.execute(text(query1))
             conn.commit()
             conn.close()
-            return jsonify({"message": "La reserva se ha cancelado correctamente"}), 202
+            return jsonify({"message": "La reserva se ha cancelado correctamente", "datos": reserva}), 202
         else:
             conn.close()
             return jsonify({"message": "No existe la reserva de tal ID"}), 404
