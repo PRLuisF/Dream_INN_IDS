@@ -24,13 +24,16 @@ def about():
 
 @app.route('/reserva', methods = ["GET", "POST"])
 def hacer_reserva():
-    respuesta = requests.get("http://localhost:5000/habitaciones")
-    if respuesta.status_code == 200:
-        rooms = []
-        habitaciones_json = respuesta.json()
-        for hab in habitaciones_json:
-            rooms.append(hab['habitacion'])
-    elif respuesta.status_code == 500:
+    try:
+        respuesta = requests.get("http://localhost:5000/habitaciones")
+        if respuesta.status_code == 200:
+            rooms = []
+            habitaciones_json = respuesta.json()
+            for hab in habitaciones_json:
+                rooms.append(hab['habitacion'])
+        elif respuesta.status_code == 500:
+            return abort(500)
+    except requests.exceptions.ConnectionError:
         return abort(500)
     
     if request.method == "POST":
@@ -49,18 +52,21 @@ def hacer_reserva():
 
             datos = {"nombre": nombre, "apellido": apellido, "email": email, "habitacion": habitacion, "fecha_ingreso": fecha,
                      "cantidad_noches": noches, "cantidad_personas": cantidad_personas}
-            request_api = requests.post("http://localhost:5000/generar-reserva", json = datos)
-
-            if request_api.status_code == 400:
-                return render_template('reserva.html', mensaje = "La cantidad de personas ingresada supera la capacidad de la habitación.", habitaciones=rooms)
-            if request_api.status_code == 409:
-                return render_template('reserva.html', mensaje = "La fecha ingresada no se encuentra disponible.", habitaciones=rooms)
-            if request_api.status_code == 500:
+            
+            try:
+                request_api = requests.post("http://localhost:5000/generar-reserva", json = datos)
+                if request_api.status_code == 400:
+                    return render_template('reserva.html', mensaje = "La cantidad de personas ingresada supera la capacidad de la habitación.", habitaciones=rooms)
+                if request_api.status_code == 409:
+                    return render_template('reserva.html', mensaje = "La fecha ingresada no se encuentra disponible.", habitaciones=rooms)
+                if request_api.status_code == 500:
+                    return abort(500)
+                if request_api.status_code == 201:
+                    request_api = request_api.json()
+                    id = request_api["id_reserva"]
+                    return render_template('mensaje_de_confirmacion.html', mensaje="La reserva se ha realizado exitosamente", id_reserva=id,   nombre = nombre, apellido = apellido, email = email, habitacion = habitacion, cant_personas = cantidad_personas, fecha = fecha, cant_noches = noches)
+            except requests.exceptions.ConnectionError:
                 return abort(500)
-            if request_api.status_code == 201:
-                request_api = request_api.json()
-                id = request_api["id_reserva"]
-                return render_template('mensaje_de_confirmacion.html', mensaje="La reserva se ha realizado exitosamente", id_reserva=id,   nombre = nombre, apellido = apellido, email = email, habitacion = habitacion, cant_personas = cantidad_personas, fecha = fecha, cant_noches = noches)
     return render_template('reserva.html', habitaciones=rooms)
 
 
