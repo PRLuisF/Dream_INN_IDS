@@ -60,7 +60,7 @@ def hacer_reserva():
             if request_api.status_code == 201:
                 request_api = request_api.json()
                 id = request_api["id_reserva"]
-                return render_template('mensaje_de_confirmacion.html', mensaje="La reserva se ha realizado exitosamente", id_reserva=id)
+                return render_template('mensaje_de_confirmacion.html', mensaje="La reserva se ha realizado exitosamente", id_reserva=id,   nombre = nombre, apellido = apellido, email = email, habitacion = habitacion, cant_personas = cantidad_personas, fecha = fecha, cant_noches = noches)
     return render_template('reserva.html', habitaciones=rooms)
 
 
@@ -70,7 +70,15 @@ def cancelar_reserva():
         nreserva = request.form.get('id_reserva')
         respuesta = requests.delete(f"http://localhost:5000/cancelar-reserva/{nreserva}")
         if respuesta.status_code == 202:
-            return render_template('mensaje_de_confirmacion.html', mensaje="La reserva se ha cancelado exitosamente", id_reserva=nreserva)
+            respuesta = respuesta.json()["datos"]
+            nombre = respuesta["nombre"]
+            apellido = respuesta["apellido"]
+            email = respuesta["email"]
+            habitacion = respuesta["habitacion"]
+            cant_personas = respuesta["cantidad_personas"]
+            fecha = respuesta["fecha_ingreso"]
+            cant_noches = respuesta["cantidad_noches"]
+            return render_template('mensaje_de_confirmacion.html', mensaje="La reserva se ha cancelado exitosamente", id_reserva=nreserva,  nombre = nombre, apellido = apellido, email = email, habitacion = habitacion, cant_personas = cant_personas, fecha = fecha, cant_noches = cant_noches)
         elif respuesta.status_code == 404:
             return render_template('cancelacion.html', mensaje="No se encontró ninguna reserva con el número ingresado")
         elif respuesta.status_code == 500:

@@ -221,6 +221,17 @@ body::-webkit-scrollbar {
 }
 
 /* Mensaje de Confirmacion*/
+
+.container3{
+    margin-top: 8%; 
+    margin-bottom: 8%;
+    text-align: center;
+}
+
+.container4{
+   margin-left: 41%;
+}
+
 #h1-confirmacion{
     color: #5f71b1; 
     margin-right: 20%; 
@@ -230,6 +241,19 @@ body::-webkit-scrollbar {
 #h2-confirmacion{
     color: #6e6e6e;
 }
+
+#list_confirmacion{
+    color: #6e6e6e;
+    text-align: left;
+}
+
+.dato-confirmacion{
+    text-align: left;
+    font-size: 150%;
+    line-height: 1.5;
+    font-family: 'Raleway';
+}
+
 
 /*Manejo de errores*/
 .error{
