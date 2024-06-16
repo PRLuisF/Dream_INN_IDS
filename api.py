@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, text, inspect
 from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime, timedelta
 
@@ -8,6 +8,31 @@ app = Flask(__name__)
 engine = create_engine("mysql+mysqlconnector://root@localhost:3305/dreaminn_db")
 #nota: la base de datos MySQL debe correr en el puerto 3305 (configurar el puerto de XAMPP, en mysql config)
     
+
+@app.route('/reservas', methods=['GET'])
+def obtener_reservas():
+    """Devuelve en formato JSON las reservas hechas y presentes en la base de datos"""
+    conn = engine.connect()
+    query = "SELECT * FROM reservas;"
+    try:
+        resultado = conn.execute(text(query))
+        conn.close()
+    except SQLAlchemyError as err:
+        return jsonify(str(err.__cause__)), 500 
+    
+    reservaciones = []
+    for row in resultado:
+        reservacion = {}
+        reservacion['id'] = row.id
+        reservacion['habitacion'] = row.habitacion
+        reservacion['cantidad_personas'] = row.cantidad_personas
+        reservacion['cantidad_noches'] = row.cantidad_noches
+        reservacion['nombre'] = row.nombre
+        reservacion['apellido'] = row.apellido
+        reservacion['email'] = row.email
+        reservacion['fecha_ingreso'] = row.fecha_ingreso
+        reservaciones.append(reservacion)
+    return jsonify(reservaciones), 200
 
 
 @app.route("/generar-reserva", methods = ["POST"])
@@ -40,9 +65,9 @@ def generar_reserva():
                     noches_reserva = timedelta(days = fil.cantidad_noches)
 
                     if fecha_reserva <= fecha_ingreso < fecha_reserva + noches_reserva and fil.habitacion == datos_body["habitacion"]:
-                        return jsonify({"mensaje": "Error: la habitacion esta ocupada en esas fechas."}), 400
+                        return jsonify({"mensaje": "Error: la habitacion esta ocupada en esas fechas."}), 409
                     elif fecha_reserva < fecha_ingreso + cant_noches <= fecha_reserva + noches_reserva and fil.habitacion == datos_body["habitacion"]:
-                        return jsonify({"mensaje": "Error: la habitacion esta ocupada en esas fechas."}), 400
+                        return jsonify({"mensaje": "Error: la habitacion esta ocupada en esas fechas."}), 409
 
             # guardar reserva    
             conn.execute(query)
@@ -58,7 +83,7 @@ def generar_reserva():
         
         return jsonify({"mensaje": "La reserva se ha creado correctamente", "id_reserva": id}), 201
 
-        
+
 @app.route("/cancelar-reserva/<id>", methods=['DELETE'])
 def cancelar_reserva(id):
     conn = engine.connect()
@@ -66,23 +91,32 @@ def cancelar_reserva(id):
     try:
         val_result = conn.execute(text(validation_query))
         if val_result.rowcount != 0:
+            res = val_result.first()
+            reserva = {}
+            reserva['nombre'] = res.nombre
+            reserva['apellido'] = res.apellido
+            reserva['email'] = res.email
+            reserva['habitacion'] = res.habitacion
+            reserva['cantidad_personas'] = res.cantidad_personas
+            reserva['fecha_ingreso'] = res.fecha_ingreso
+            reserva['cantidad_noches'] = res.cantidad_noches
+        
             query1 = f"DELETE FROM reservas WHERE id = {id};"
             resultado1 = conn.execute(text(query1))
             conn.commit()
             conn.close()
-            return jsonify({"message": "La reserva se ha cancelado correctamente"}), 202
+            return jsonify({"message": "La reserva se ha cancelado correctamente", "datos": reserva}), 202
         else:
             conn.close()
             return jsonify({"message": "No existe la reserva de tal ID"}), 404
     except SQLAlchemyError as err:
-        return jsonify(str(err.__cause__))
-
+        return jsonify(str(err.__cause__)), 500
 
 
 @app.route("/habitaciones", methods=["GET"])
 def mostrar_habitaciones():
     """
-    Se conecta a la base de datos dreaminn, y hace una consulta en la cual devuelve las habitaciones que no estan ocupadas
+    Se conecta a la base de datos Dreaminn, y devuelve una lista de diccionarios que corresponde a los datos de la tabla habitaciones. En caso de fallar, devuelve el codigo de error 500, y un mensaje de error.
     """
     conn = engine.connect()
     query = "SELECT * FROM habitaciones;"
@@ -90,7 +124,7 @@ def mostrar_habitaciones():
         habs = conn.execute(text(query))
         conn.close()
     except SQLAlchemyError as err:
-        return jsonify(str(err.__cause__))
+        return jsonify(str(err.__cause__)), 500
 
     datos = []
     for dato in habs:
@@ -108,7 +142,21 @@ def mostrar_habitaciones():
 @app.route('/agregar-habitacion', methods=['POST'])
 def incorporar_habitacion():
     conn = engine.connect()
+    inspector = inspect(engine)
+    columnas = [column['name'] for column in inspector.get_columns('habitaciones')]
+    total_columnas = len(columnas)
+    
     nueva_hab = request.get_json()
+
+    # Se verifica que la cantidad de columnas ingresada sea correcta    
+    if len(nueva_hab) != total_columnas:
+        return jsonify({"message": "No se ingresaron todos los campos necesarios"})
+
+    # Se verifica que cada columna ingresada pertenezca a la tabla
+    for col in nueva_hab:
+        if col not in columnas:
+            return jsonify({"message": f"No hay ninguna columna llamada {col} en la base de datos"})
+        
     query = f"""INSERT INTO habitaciones VALUES
                 ({nueva_hab["habitacion"]}, {nueva_hab["cantidad_personas"]}, {nueva_hab["precio"]}, '{nueva_hab["descripcion"]}', '{nueva_hab["categoria"]}');"""
     try:
@@ -125,7 +173,14 @@ def update_habitacion(habitacion):
     conn = engine.connect()
     mod_data = request.get_json()
 
-    query = f"UPDATE habitaciones SET cantidad_personas = {mod_data['cantidad_personas']}, precio = {mod_data['precio']}, descripcion = '{mod_data['descripcion']}', categoria = '{mod_data['categoria']}' WHERE habitacion = {habitacion}"
+    query = f"UPDATE habitaciones SET "
+    for columna,dato in mod_data.items():
+        if type(dato) == str:
+            query += f"{columna} = '{dato}',"
+        else:
+            query += f"{columna} = {dato} ,"
+    query = query[:-1]
+    query += f"WHERE habitacion = {habitacion};"
  
     query_validation = f"SELECT * FROM habitaciones WHERE habitacion = {habitacion};"
     try:

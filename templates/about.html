@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+       
+       <div class="row">
+              <h1 class="title">¿Quiénes somos?</h1>
+              <div class="col-sm-6"><p>Somos un grupo de estudiantes de primer año de la Facultad de Ingeniería de la Universidad de Buenos Aires. Este proyecto se hizo para la materia Introducción al Desarrollo De Software y tiene como objetivo principal aprender herramientas escenciales para el crecimiento profesional.</p></div>
+              <div class="col-sm-6"><p>En esta oportunidad, elegimos un enfoque centrado en un sitio web de hospedajes más específicamente llamado 'Dream INN', un hotel situado en Mar de las Pampas, Provincia de Buenos Aires Argentina, característico por sus modernas habitaciones de ensueño.</p></div>          
+       </div>
+       
+       <div class="row">
+              <h1 class="title">Más sobre DreamINN web</h1>
+              <div class="">
+                     
+                     <p>En nuestra página web, podés acceder a todas las facilidades para hacer de tu estadía una experiencia perfecta.</p>
+                     <p>Te ofrecemos:</p>
+                     <ul>
+                            <a href="{{ url_for('hacer_reserva')}}"><li class="about-a">Reservas en línea</li></a>
+                            <a href="{{ url_for('cancelar_reserva')}}"><li class="about-a">Cancelación flexible</li></a>
+                            <a href="{{ url_for('habitaciones')}}"><li class="about-a">Explorá nuestras habitaciones</li></a>
+                     </ul>
+              </div>
+       </div>
+
+
+       <div class="spacer"> 
+              <h1 class="title">Integrantes del DreamTeam</h1>
+    
+              <div class="col-sm-4">
+                     <div class="persona">
+                            <img src="{{ url_for('static', filename='images/photos/cele.jpeg')}}" class="img-responsive" alt="slide" id="marco-c">
+                            <label for="marco-c" class="nombre">Celeste Zeolla</label>
+                     </div>  
+                     <div class="persona">
+                            <img src="{{ url_for('static', filename='images/photos/emma.jpeg')}}" class="img-responsive" alt="slide" id="marco-e">
+                            <label for="marco-e" class="nombre">Emma Castarés</label>
+                     </div> 
+                     <div class="persona">
+                            <img src="{{ url_for('static', filename='images/photos/raquel.jpeg')}}" class="img-responsive" alt="slide" id="marco-r">
+                            <label for="marco-r" class="nombre">Raquel Dávila</label>
+                     </div>
+                     </div>
+
+              <div class="col-sm-4">
+                     <div class="persona">
+                            <img src="{{ url_for('static', filename='images/photos/karen.jpeg')}}" class="img-responsive" alt="slide" id="marco-k">
+                            <label for="marco-k" class="nombre">Karen Percincula</label>
+                     </div>
+                     <div class="persona">
+                            <img src="{{ url_for('static', filename='images/photos/nancy.jpeg')}}" class="img-responsive" alt="slide" id="marco-n">
+                            <label for="marco-n" class="nombre">Nancy Ni</label>
+                     </div>
+                     <div class="persona">
+                            <img src="{{ url_for('static', filename='images/photos/mica.jpeg')}}" class="img-responsive" alt="slide" id="marco-m">
+                            <label for="marco-m" class="nombre">Micaela Kaimakamian</label>
+                     </div>  
+              </div>
+
+              <div class="col-sm-4">
+                     <div class="persona">
+                            <img src="{{ url_for('static', filename='images/photos/lucas.jpeg')}}" class="img-responsive" alt="slide" id="marco-l">
+                            <label for="marco-l" class="nombre">Lucas Raffinetti Tempone</label>
+                     </div> 
+                     <div class="persona">
+                            <img src="{{ url_for('static', filename='images/photos/luis.jpg')}}" class="img-responsive" alt="slide" id="marco-lu">
+                            <label for="marco-lu" class="nombre">Luis Fernando Peña Ramirez</label>
+                     </div>    
+              </div>   
+              
+       </div>
+
+
+</div>
+{% endblock %}
