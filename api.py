@@ -150,12 +150,12 @@ def incorporar_habitacion():
 
     # Se verifica que la cantidad de columnas ingresada sea correcta    
     if len(nueva_hab) != total_columnas:
-        return jsonify({"message": "No se ingresaron todos los campos necesarios"})
+        return jsonify({"message": "No se ingresaron todos los campos necesarios"}), 400
 
     # Se verifica que cada columna ingresada pertenezca a la tabla
     for col in nueva_hab:
         if col not in columnas:
-            return jsonify({"message": f"No hay ninguna columna llamada {col} en la base de datos"})
+            return jsonify({"message": f"No hay ninguna columna llamada {col} en la base de datos"}), 404
         
     query = f"""INSERT INTO habitaciones VALUES
                 ({nueva_hab["habitacion"]}, {nueva_hab["cantidad_personas"]}, {nueva_hab["precio"]}, '{nueva_hab["descripcion"]}', '{nueva_hab["categoria"]}');"""
@@ -165,7 +165,7 @@ def incorporar_habitacion():
         conn.close()
         return jsonify({"message": "Se ha incorporado correctamente la nueva habitacion a la base de datos"}), 201
     except SQLAlchemyError as err:
-        return jsonify({"message": "Se ha producido un error " + str(err.__cause__)})
+        return jsonify({"message": "Se ha producido un error " + str(err.__cause__)}), 500
     
 
 @app.route('/modificar/<habitacion>', methods = ['PATCH'])
@@ -219,4 +219,4 @@ def eliminar_habitacion(habitacion):
 
 
 if __name__ == "__main__":
-    app.run("127.0.0.1", port = 5000, debug = True)
+    app.run("127.0.0.1", port = 5000)
