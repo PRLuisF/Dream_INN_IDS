@@ -279,3 +279,24 @@ body::-webkit-scrollbar {
     color: #314085;
     font-weight: 600;
 }
+
+/* About */
+.about-a{
+    color: #6e6e6e;
+    margin-top: 2%;
+}
+.persona{
+    text-align: center;
+    margin: 15%;
+}
+#marco-r, #marco-e, #marco-c,
+#marco-k, #marco-l, #marco-n,
+#marco-m, #marco-lu{
+    border-radius: 50%; /* Hace que los bordes sean redondeados, creando un círculo */
+    overflow: hidden; /* Oculta cualquier parte de la imagen fuera del marco redondo */
+    
+}
+.nombre{
+    margin-top: 7%;
+    font-size: medium;
+}
