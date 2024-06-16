@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, text, inspect
 from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime, timedelta
 
@@ -142,7 +142,21 @@ def mostrar_habitaciones():
 @app.route('/agregar-habitacion', methods=['POST'])
 def incorporar_habitacion():
     conn = engine.connect()
+    inspector = inspect(engine)
+    columnas = [column['name'] for column in inspector.get_columns('habitaciones')]
+    total_columnas = len(columnas)
+    
     nueva_hab = request.get_json()
+
+    # Se verifica que la cantidad de columnas ingresada sea correcta    
+    if len(nueva_hab) != total_columnas:
+        return jsonify({"message": "No se ingresaron todos los campos necesarios"})
+
+    # Se verifica que cada columna ingresada pertenezca a la tabla
+    for col in nueva_hab:
+        if col not in columnas:
+            return jsonify({"message": f"No hay ninguna columna llamada {col} en la base de datos"})
+        
     query = f"""INSERT INTO habitaciones VALUES
                 ({nueva_hab["habitacion"]}, {nueva_hab["cantidad_personas"]}, {nueva_hab["precio"]}, '{nueva_hab["descripcion"]}', '{nueva_hab["categoria"]}');"""
     try:
