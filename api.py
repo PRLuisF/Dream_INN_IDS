@@ -18,7 +18,7 @@ def obtener_reservas():
         resultado = conn.execute(text(query))
         conn.close()
     except SQLAlchemyError as err:
-        return jsonify(str(err.__cause__))
+        return jsonify(str(err.__cause__)), 500 
     
     reservaciones = []
     for row in resultado:
@@ -116,7 +116,7 @@ def cancelar_reserva(id):
 @app.route("/habitaciones", methods=["GET"])
 def mostrar_habitaciones():
     """
-    Se conecta a la base de datos dreaminn, y hace una consulta en la cual devuelve las habitaciones que no estan ocupadas
+    Se conecta a la base de datos Dreaminn, y devuelve una lista de diccionarios que corresponde a los datos de la tabla habitaciones. En caso de fallar, devuelve el codigo de error 500, y un mensaje de error.
     """
     conn = engine.connect()
     query = "SELECT * FROM habitaciones;"
