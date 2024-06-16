@@ -45,9 +45,6 @@ p{margin-bottom: 1em;line-height: 1.5em;}
 .banner .welcome-message{position: absolute;left: 0;right:0;bottom:0;top:0;text-align: center;}
 .banner .welcome-message .wrap-info{display: table;height: 100%;width: 100%;}
 .banner .welcome-message .wrap-info .information{display: table-cell;vertical-align: middle;}
-.banner .arrow-nav{position: absolute;bottom:-3.5em;background-color: #455bbf;height: 7em;width: 7em;display: inline-block;z-index: 100;left: 50%;margin-left: -52px;color: #fff;border-radius: 50%;}
-.banner .arrow-nav i{font-size: 5em;line-height:105px;}
-.banner .arrow-nav:hover{background: #2d376d;}
 
 
 /*reserve-info*/
@@ -57,33 +54,18 @@ p{margin-bottom: 1em;line-height: 1.5em;}
 .services .caption{background-color: #fff;padding: 1.5em;}
 .services .caption a {color: #455bbf;;font-size: 1.25em;}
 .services .caption a:hover{color: #2d376d;}
-.carousel-control{width: 10%;background: none !important;}
-.carousel-control i.fa{position: absolute;left: 0;right: 0;top: 50%;margin-top: -10px;}
-.carousel img{width: 100%;}
 
 /*footer*/
 footer{background-color:#abb5d8;color: #f1f1f1;}
 footer.spacer{padding: 3em 0;}
-footer h4{color: #f1f1f1;}
 footer a,footer p{line-height: 1.5em;font-size: 0.85em;color: #f1f1f1;}
-footer a:hover{color: #fff;}
+footer a:hover{color: #d0d7ec;}
 footer .subscribe .form-control{height: 30px;padding: 4px 12px;border: none;}
 footer .subscribe .input-group-btn:last-child>.btn{margin: 0;}
 footer .subscribe .input-group{margin-bottom: 1em;}
 footer .subscribe .social a{font-size: 1.5em;margin-right: 0.25em;}
 .copyright{background-color: #6e7aa3;padding: 0.6em 0;font-size: 0.85em;color: #fff;}
-.copyright a{color: #acacae;}
 /*footer*/
-
-.toTop{position: fixed;right: 1em; bottom: 1em;background:rgba(0,0,0,0.5);width: 35px; height: 35px;text-align: center;color: #fff;font-size: 2em; }
-.toTop:hover{color: #fff;background:rgba(0,0,0,0.8);}
-
-
-
-
-
-
-
 
 
 /*unform*/
@@ -91,7 +73,6 @@ footer .subscribe .social a{font-size: 1.5em;margin-right: 0.25em;}
 .form-horizontal .radio{padding-top: 3px;}
 .radio-inline input[type="radio"]{margin-left: 0;}
 div.radio{margin-right: 10px;}
-div.radio span{background:url(../images/radio.png) 0 20px !important;}
 
 div.radio span,div.radio input{width: 20px;height: 20px;}
 div.radio span.checked{background-position: 0 0 !important;}
@@ -118,46 +99,10 @@ div.selector option{ padding: 10px;}
 
 /*rooms and tariff*/
 .rooms{margin-bottom: 2em;}
-.rooms .info{padding: 1.5em;background-color: #eeeeee;}
-
-
-.room-features .amenitites li{margin-bottom: 1em;}
-.room-features .size-price{background-color: #455bbf;padding: 2em 0;text-align: center;color: #fff;height: 10.97em;line-height: 3em;}
-.room-features .size-price span{display: block;font-size: 2em;}
-.info { color: #888888 }
-
+.rooms .info{padding: 1.5em;background-color: #eeeeee;color: #888888;}
 
 .gallery .gallery-image{margin-bottom: 2em;display: inline-block;}
 .gallery .gallery-image img{width: 100%;}
-
-body::-webkit-scrollbar {
-        width: 6px;
-    }
- 
-    
-    /* Let's get this party started */
-    ::-webkit-scrollbar {
-        width: 3px;
-    }
-
-    /* Track */
-    ::-webkit-scrollbar-track {
-       background: #ccc; 
-/*        -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.3); 
-        -webkit-border-radius: 10px;
-        border-radius: 10px;*/
-    }
-
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-/*        -webkit-border-radius: 10px;
-        border-radius: 10px;*/
-        background:#455bbf; 
-    }
-    ::-webkit-scrollbar-thumb:window-inactive {
-        background: #ddd; 
-    }
-
 
 
 
