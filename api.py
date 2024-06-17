@@ -105,7 +105,7 @@ def cancelar_reserva(id):
             resultado1 = conn.execute(text(query1))
             conn.commit()
             conn.close()
-            return jsonify({"message": "La reserva se ha cancelado correctamente", "datos": reserva}), 202
+            return jsonify({"message": "La reserva se ha cancelado correctamente", "datos": reserva}), 200
         else:
             conn.close()
             return jsonify({"message": "No existe la reserva de tal ID"}), 404
@@ -215,7 +215,7 @@ def eliminar_habitacion(habitacion):
             return jsonify({"message": "La habitacion no existe"}), 404
     except SQLAlchemyError as err:
         jsonify(str(err.__cause__))
-    return jsonify({'message': 'La habitacion se elimino correctamente'}), 202
+    return jsonify({'message': 'La habitacion se elimino correctamente'}), 200
 
 
 if __name__ == "__main__":

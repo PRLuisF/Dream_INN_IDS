@@ -75,7 +75,7 @@ def cancelar_reserva():
         try:
             nreserva = request.form.get('id_reserva')
             respuesta = requests.delete(f"http://localhost:5000/cancelar-reserva/{nreserva}")
-            if respuesta.status_code == 202:
+            if respuesta.status_code == 200:
                 respuesta = respuesta.json()["datos"]
                 nombre = respuesta["nombre"]
                 apellido = respuesta["apellido"]
