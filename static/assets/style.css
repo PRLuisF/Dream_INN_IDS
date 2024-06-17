@@ -227,8 +227,11 @@ div.selector option{ padding: 10px;}
 
 /* About */
 .about-a{
-    color: #6e6e6e;
     margin-top: 2%;
+}
+.about-a a {
+    color: #6e6e6e;
+    text-decoration: none;
 }
 .persona{
     text-align: center;
