@@ -193,7 +193,7 @@ def update_habitacion(habitacion):
             conn.close()
             return jsonify({'message': "La habitacion no existe"}), 404
     except SQLAlchemyError as err:
-        return jsonify({'message': str(err.__cause__)})
+        return jsonify({'message': str(err.__cause__)}), 500
     return jsonify({'message': 'La habitacion se ha modificado correctamente'}), 200
 
 
@@ -214,7 +214,7 @@ def eliminar_habitacion(habitacion):
             conn.close()
             return jsonify({"message": "La habitacion no existe"}), 404
     except SQLAlchemyError as err:
-        jsonify(str(err.__cause__))
+        return jsonify(str(err.__cause__)), 500
     return jsonify({'message': 'La habitacion se elimino correctamente'}), 200
 
 
