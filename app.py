@@ -15,6 +15,9 @@ def habitaciones():
     except (requests.exceptions.JSONDecodeError, requests.exceptions.ConnectionError):
         abort(500)
 
+    if habitaciones.status_code == 500:
+        abort(500)
+
     return render_template('habitaciones.html', habitaciones=respuesta_hab)
 
 @app.route('/about') 
